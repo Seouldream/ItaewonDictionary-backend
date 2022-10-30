@@ -9,26 +9,26 @@ import java.util.*;
 import java.util.stream.*;
 
 @RestController
-public class StudyController {
-  private StudyService studyService;
+public class TalkController {
+  private TalkService talkService;
 
-  public StudyController(StudyService studyService) {
-    this.studyService = studyService;
+  public TalkController(TalkService talkService) {
+    this.talkService = talkService;
   }
 
-  @GetMapping("studies")
+  @GetMapping("talks")
   @ResponseStatus(HttpStatus.OK)
-  public StudiesDto list(
+  public TalksDto list(
       @RequestParam(required = false, defaultValue = "1") Integer page
   ) {
-    List<StudyDto> studiesDtos =
-        studyService.list(page)
+    List<TalkDto> talkDtos =
+        talkService.list(page)
             .stream()
-            .map(study -> study.toDto())
+            .map(talk -> talk.toDto())
             .collect(Collectors.toList());
 
-    int pageNumber = studyService.pages();
+    int pageNumber = talkService.pages();
 
-    return new StudiesDto(studiesDtos,pageNumber);
+    return new TalksDto(talkDtos,pageNumber);
   }
 }
