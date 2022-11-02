@@ -1,7 +1,9 @@
 package com.example.seouldream.cocheline.controllers;
 
 import com.example.seouldream.cocheline.dtos.*;
+import com.example.seouldream.cocheline.models.*;
 import com.example.seouldream.cocheline.services.*;
+import org.springframework.data.domain.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,14 +23,14 @@ public class StudyController {
   public StudiesDto list(
       @RequestParam(required = false, defaultValue = "1") Integer page
   ) {
-    List<StudyDto> studiesDtos =
+    List<StudyDto> studyDtos =
         studyService.list(page)
             .stream()
-            .map(study -> study.toDto())
+            .map(Study::toDto)
             .collect(Collectors.toList());
 
     int pageNumber = studyService.pages();
 
-    return new StudiesDto(studiesDtos,pageNumber);
+    return new StudiesDto(studyDtos, pageNumber);
   }
 }

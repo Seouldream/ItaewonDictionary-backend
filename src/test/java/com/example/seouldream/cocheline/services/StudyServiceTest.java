@@ -17,14 +17,17 @@ class StudyServiceTest {
   private StudyService studyService;
   private StudyRepository studyRepository;
 
+
   @SpyBean
   Pageable pageable;
+
 
   @BeforeEach
   void setUp() {
     studyRepository = mock(StudyRepository.class);
     studyService = new StudyService(studyRepository);
   }
+
   @Test
   void list() {
     Study study = mock(Study.class);

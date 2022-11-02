@@ -13,11 +13,13 @@ public class StudyService {
   private StudyRepository studyRepository;
   private Pageable pageable;
 
+
   public StudyService(StudyRepository studyRepository) {
     this.studyRepository = studyRepository;
   }
 
   public Page<Study> list(int page) {
+
     Sort sort = Sort.by("createdAt").descending();
 
     pageable = PageRequest.of(page - 1, 4, sort);

@@ -16,10 +16,6 @@ public class StudiesDto {
     return pageNumber;
   }
 
-  public StudiesDto() {
-
-  }
-
   public StudiesDto(List<StudyDto> studies, int pageNumber) {
     this.studies = studies;
     this.pageNumber = pageNumber;

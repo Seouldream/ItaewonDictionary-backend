@@ -30,9 +30,12 @@ class StudyControllerTest {
 
   @Test
   void studies() throws Exception {
-    Study study = new Study(1L,"developer1","anyone Here?","I dont see anyone","Java");
+    Study study = new Study(1L,"any","title of study", "hi~", 1L, 1L);
+    HashTag hashTag = new HashTag(1L,"tag",study);
 
-    List<Study> studies  = List.of(study);
+    study = new Study(1L,"any","title of study", "hi~", 1L, 1L,List.of(hashTag));
+
+    List<Study> studies = List.of(study);
 
     given(studyService.list(1)).willReturn(
         new PageImpl<>(studies)
@@ -41,7 +44,13 @@ class StudyControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.get("/studies"))
         .andExpect(status().isOk())
         .andExpect(content().string(
-            containsString("anyone Here?")
+            containsString("title of study")
+        ))
+        .andExpect(content().string(
+            containsString("hi~")
+        ))
+        .andExpect(content().string(
+            containsString("tag")
         ));
   }
 }
