@@ -57,7 +57,15 @@ public class Study {
       Long views,
       Long likes
   ) {
-
+    this.writer = writer;
+    this.title = title;
+    this.topic = topic;
+    this.place = place;
+    this.time = time;
+    this.participants = participants;
+    this.content = content;
+    this.views = views;
+    this.likes = likes;
   }
 
   @CreationTimestamp
@@ -142,5 +150,9 @@ public class Study {
         otherStudy.content.equals(this.content) &&
         otherStudy.views.equals(this.views) &&
         otherStudy.likes.equals(this.likes);
+  }
+
+  public void setId(long id) {
+    this.id = id;
   }
 }

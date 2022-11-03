@@ -5,13 +5,33 @@ import com.example.seouldream.cocheline.models.*;
 import java.util.*;
 
 public class RequestedStudyDto {
-  private final String title;
-  private final String topic;
-  private final String place;
-  private final String time;
-  private final String participants;
-  private final String content;
-  private final String hashTags;
+  private String title;
+  private String topic;
+  private String place;
+  private String time;
+  private String participants;
+  private String content;
+  private String hashTags;
+
+  public RequestedStudyDto() {
+  }
+
+  public RequestedStudyDto(
+      String title,
+      String topic,
+      String place,
+      String time,
+      String participants,
+      String content,
+      String hashTags) {
+    this.title = title;
+    this.topic = topic;
+    this.place = place;
+    this.time = time;
+    this.participants = participants;
+    this.hashTags = hashTags;
+    this.content = content;
+  }
 
   public String getTitle() {
     return title;
@@ -39,22 +59,5 @@ public class RequestedStudyDto {
 
   public String getHashTags() {
     return hashTags;
-  }
-
-  public RequestedStudyDto(
-      String title,
-      String topic,
-      String place,
-      String time,
-      String participants,
-      String content,
-      String hashTags) {
-    this.title = title;
-    this.topic = topic;
-    this.place = place;
-    this.time = time;
-    this.participants = participants;
-    this.content = content;
-    this.hashTags = hashTags;
   }
 }

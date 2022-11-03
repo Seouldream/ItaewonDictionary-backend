@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.*;
 import org.springframework.boot.test.mock.mockito.*;
 import org.springframework.data.domain.*;
+import org.springframework.http.*;
 import org.springframework.test.context.*;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.*;
@@ -79,7 +80,29 @@ class StudyControllerTest {
 
   @Test
   void post() throws Exception {
-    mockMvc.perform(MockMvcRequestBuilders.post("/studies/post"))
+    given(studyService.createStudy(any(),any(),any(),any(),any(),any(),any()))
+        .willReturn(new Study(1L,"rosie",
+            "test1",
+            "java",
+            "holywater",
+            "9AM",
+            "2 people",
+            "this is test",
+            1L,
+            1L
+            ));
+
+    mockMvc.perform(MockMvcRequestBuilders.post("/studies/post")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{" +
+                "\"title\":\"test1\"," +
+                "\"topic\":\"java\"," +
+                "\"place\":\"holywater\"," +
+                "\"time\":\"9AM\"," +
+                "\"participants\":\"2 people\"," +
+                "\"hashTags\":\"java,react\"," +
+                "\"content\":\"this is test\"" +
+                "}"))
         .andExpect(status().isCreated());
 
   }

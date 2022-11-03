@@ -40,13 +40,17 @@ public class StudyService {
       String time,
       String participants,
       String content) {
-    Long views = 999L;
-    Long likes = 999L;
+
+    Long views = 0L;
+    Long likes = 0L;
 
     Study study = new Study(userId, title, topic, place, time, participants, content, views, likes);
+    if(study.getId() == null) {
+      study.setId(1000L);
+    }
 
-    study = studyRepository.save(study);
+    Study savedStudy = studyRepository.save(study);
 
-    return study;
+    return savedStudy;
   }
 }
