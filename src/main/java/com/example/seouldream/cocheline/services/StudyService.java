@@ -6,13 +6,14 @@ import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 
 import javax.transaction.*;
+import java.util.*;
 
 @Service
 @Transactional
 public class StudyService {
   private StudyRepository studyRepository;
-  private Pageable pageable;
 
+  private Pageable pageable;
 
   public StudyService(StudyRepository studyRepository) {
     this.studyRepository = studyRepository;
@@ -29,5 +30,23 @@ public class StudyService {
 
   public int pages() {
     return studyRepository.findAll(pageable).getTotalPages();
+  }
+
+  public Study createStudy(
+      String userId,
+      String title,
+      String topic,
+      String place,
+      String time,
+      String participants,
+      String content) {
+    Long views = 999L;
+    Long likes = 999L;
+
+    Study study = new Study(userId, title, topic, place, time, participants, content, views, likes);
+
+    study = studyRepository.save(study);
+
+    return study;
   }
 }

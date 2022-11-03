@@ -2,11 +2,8 @@ package com.example.seouldream.cocheline.models;
 
 import com.example.seouldream.cocheline.dtos.*;
 import com.fasterxml.jackson.annotation.*;
-import org.hibernate.annotations.*;
 
-import javax.persistence.Entity;
 import javax.persistence.*;
-import java.time.*;
 
 @Entity
 public class HashTag {
@@ -14,18 +11,20 @@ public class HashTag {
   @GeneratedValue
   private Long id;
   private String tag;
-  @JsonBackReference
-  @ManyToOne
-  @JoinColumn(name = "study_id")
-  private Study study;
+  private Long studyId;
 
   public HashTag() {
   }
 
-  public HashTag(Long id, String tag, Study study) {
+  public HashTag(Long id, String tag, Long studyId) {
     this.id = id;
     this.tag = tag;
-    this.study = study;
+    this.studyId = studyId;
+  }
+
+  public HashTag(String tag, Long studyId) {
+    this.tag = tag;
+    this.studyId = studyId;
   }
 
   public Long getId() {
@@ -36,7 +35,19 @@ public class HashTag {
     return tag;
   }
 
-  public Study getStudy() {
-    return study;
+  public Long getStudyId() {
+    return studyId;
+  }
+
+  public HashTagDto toDto() {
+    return new HashTagDto(tag);
+  }
+
+  @Override
+  public boolean equals(Object other) {
+    HashTag OtherHashTag = (HashTag) other;
+
+    return OtherHashTag.tag.equals(this.tag) &&
+        OtherHashTag.studyId.equals(this.studyId);
   }
 }

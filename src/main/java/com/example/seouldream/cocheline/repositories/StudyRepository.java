@@ -10,6 +10,7 @@ import java.util.*;
 public interface StudyRepository extends JpaRepository<Study, Long> {
   Optional<Study> findById(Long id);
   Page<Study> findAll(Pageable pageable);
+  Study save(Study study);
 
 
 }
