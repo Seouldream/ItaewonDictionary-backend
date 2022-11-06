@@ -12,7 +12,6 @@ import java.util.*;
 @Transactional
 public class StudyService {
   private StudyRepository studyRepository;
-
   private Pageable pageable;
 
   public StudyService(StudyRepository studyRepository) {
@@ -45,12 +44,16 @@ public class StudyService {
     Long likes = 0L;
 
     Study study = new Study(userId, title, topic, place, time, participants, content, views, likes);
-    if(study.getId() == null) {
-      study.setId(1000L);
-    }
 
     Study savedStudy = studyRepository.save(study);
 
     return savedStudy;
+  }
+
+  public Study findStudy(Long id) {
+
+    Study study = studyRepository.findById(id).orElseThrow();
+
+    return study;
   }
 }

@@ -33,7 +33,8 @@ public class HashTagService {
     }
 
     return hashTagRepository.findAllByStudyId(studyId)
-        .stream().map(HashTag::toDto)
+        .stream()
+        .map(HashTag::toDto)
         .collect(Collectors.toList());
   }
 }

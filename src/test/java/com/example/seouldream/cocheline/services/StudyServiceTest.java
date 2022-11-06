@@ -47,6 +47,37 @@ class StudyServiceTest {
   }
 
   @Test
+  void findStudyById() {
+    String writer = "tester";
+    String title = "one Front man needed";
+    String topic = "frontend Engineer";
+    String place = "HolyWater";
+    String time = "9AM";
+    String participants = "2 people";
+    String content = "I need a man ,bro";
+    Long views = 100L;
+    Long likes = 999L;
+
+    Study study = new Study(1L,writer,
+        title,
+        topic,
+        place,
+        time,
+        participants,
+        content,
+        views,
+        likes);
+
+    given(studyRepository.findById(any()))
+        .willReturn(Optional.of(study));
+
+    studyService.findStudy(study.getId());
+
+    verify(studyRepository).findById(study.getId());
+
+  }
+
+  @Test
   void post() {
     String writer = "tester";
     String title = "one Front man needed";

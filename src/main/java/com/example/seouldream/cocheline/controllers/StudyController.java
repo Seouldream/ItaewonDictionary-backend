@@ -20,7 +20,7 @@ public class StudyController {
     this.hashTagService = hashTagService;
   }
 
-  @GetMapping("studies")
+  @GetMapping("/studies")
   @ResponseStatus(HttpStatus.OK)
   public StudiesDto list(
       @RequestParam(required = false, defaultValue = "1") Integer page
@@ -37,7 +37,18 @@ public class StudyController {
     return new StudiesDto(studyDtos, pageNumber);
   }
 
-  @PostMapping("studies/post")
+  @GetMapping("/studies/{id}")
+  public StudyDto detail(
+      @PathVariable() Long id
+  ) {
+    Study study = studyService.findStudy(id);
+
+    List<HashTagDto> hashTagDtos = hashTagService.list(study.getId());
+
+    return study.toDto(hashTagDtos);
+  }
+
+  @PostMapping("/studies/post")
   @ResponseStatus(HttpStatus.CREATED)
   public StudyDto post(
       // TODO userID 리퀘스트 어트리뷰트로 받아와야함
