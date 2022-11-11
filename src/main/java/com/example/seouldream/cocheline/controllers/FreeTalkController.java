@@ -12,11 +12,9 @@ import java.util.stream.*;
 @RestController
 public class FreeTalkController {
   private FreeTalkService freeTalkService;
-  private FreeTalkHashTagService freeTalkHashTagService;
 
-  public FreeTalkController(FreeTalkService freeTalkService, FreeTalkHashTagService freeTalkHashTagService) {
+  public FreeTalkController(FreeTalkService freeTalkService) {
     this.freeTalkService = freeTalkService;
-    this.freeTalkHashTagService = freeTalkHashTagService;
   }
 
   @GetMapping("/freeTalks")
@@ -26,10 +24,7 @@ public class FreeTalkController {
   ) {
 
     List<FreeTalkDto> freeTalkDtos =
-        freeTalkService.list(page)
-            .stream()
-            .map(freeTalk -> freeTalk.toDto(freeTalkHashTagService.list(freeTalk.getId())))
-            .collect(Collectors.toList());
+        freeTalkService.list(page);
 
     int pageNumber = freeTalkService.pages();
 
@@ -43,9 +38,7 @@ public class FreeTalkController {
   ) {
     FreeTalk freeTalk = freeTalkService.findFreeTalk(id);
 
-    List<FreeTalkHashTagDto> freeTalkHashTagDtos = freeTalkHashTagService.list(freeTalk.getId());
-
-    return freeTalk.toDto(freeTalkHashTagDtos);
+    return freeTalk.toDto();
   }
 
   @PostMapping("/freeTalks/post")
@@ -59,14 +52,10 @@ public class FreeTalkController {
     FreeTalk freeTalk = freeTalkService.create(
         userId,
         requestedFreeTalkDto.getTitle(),
-        requestedFreeTalkDto.getContent()
+        requestedFreeTalkDto.getContent(),
+        requestedFreeTalkDto.getHashTags()
         );
 
-  List<FreeTalkHashTagDto> freeTalkHashTagDtos =
-      freeTalkHashTagService.create(
-          freeTalk.getId(),
-          requestedFreeTalkDto.getFreeTalkHashTags());
-
-    return freeTalk.toDto(freeTalkHashTagDtos);
+    return freeTalk.toDto();
   }
 }

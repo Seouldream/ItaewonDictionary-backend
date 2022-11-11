@@ -1,5 +1,6 @@
 package com.example.seouldream.cocheline.services;
 
+import com.example.seouldream.cocheline.dtos.*;
 import com.example.seouldream.cocheline.models.*;
 import com.example.seouldream.cocheline.repositories.*;
 import org.springframework.data.domain.*;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.*;
 
 import javax.transaction.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Service
 @Transactional
@@ -19,13 +21,18 @@ public class FreeTalkService {
     this.freeTalkRepository = freeTalkRepository;
   }
 
-  public Page<FreeTalk> list(Integer page) {
+  public List<FreeTalkDto> list(Integer page) {
 
     Sort sort = Sort.by("createdAt").descending();
 
     pageable = PageRequest.of(page - 1, 4, sort);
 
-    return freeTalkRepository.findAll(pageable);
+     List<FreeTalkDto> freeTalkDtos = freeTalkRepository.findAll(pageable)
+        .stream()
+        .map(freeTalk -> freeTalk.toDto())
+        .collect(Collectors.toList());
+
+    return freeTalkDtos;
   }
 
   public int pages() {
@@ -40,9 +47,15 @@ public class FreeTalkService {
     return freeTalk;
   }
 
-  public FreeTalk create(String userId, String title, String content) {
+  public FreeTalk create(String userId, String title, String content,String hashTags) {
 
-    FreeTalk freeTalk = new FreeTalk(userId,title,content);
+    List<String>  hashTagList = new ArrayList<>();
+
+    for(String hashTag : hashTags.split(",")) {
+      hashTagList.add(hashTag);
+    }
+
+    FreeTalk freeTalk = new FreeTalk(userId,title,hashTagList,content);
 
     return freeTalkRepository.save(freeTalk);
   }

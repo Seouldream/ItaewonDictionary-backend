@@ -13,11 +13,9 @@ import java.util.stream.*;
 
 public class StudyController {
   private StudyService studyService;
-  private HashTagService hashTagService;
 
-  public StudyController(StudyService studyService, HashTagService hashTagService) {
+  public StudyController(StudyService studyService) {
     this.studyService = studyService;
-    this.hashTagService = hashTagService;
   }
 
   @GetMapping("/studies")
@@ -26,11 +24,7 @@ public class StudyController {
       @RequestParam(required = false, defaultValue = "1") Integer page
   ) {
 
-    List<StudyDto> studyDtos =
-        studyService.list(page)
-            .stream()
-            .map(study -> study.toDto(hashTagService.list(study.getId())))
-            .collect(Collectors.toList());
+    List<StudyDto> studyDtos = studyService.list(page);
 
     int pageNumber = studyService.pages();
 
@@ -39,14 +33,13 @@ public class StudyController {
 
   @GetMapping("/studies/{id}")
   public StudyDto detail(
+      // ToDo RequestAttribute userId 필요
       @PathVariable() Long id
   ) {
-    Study study = studyService.findStudy(id);
 
-    List<HashTagDto> hashTagDtos = hashTagService.list(study.getId());
-
-    return study.toDto(hashTagDtos);
+    return studyService.findStudy(id);
   }
+
 
   @PostMapping("/studies/post")
   @ResponseStatus(HttpStatus.CREATED)
@@ -56,17 +49,17 @@ public class StudyController {
   ) {
     String userId = "tester";
 
-    Study study = studyService.createStudy(
+     StudyDto studyDto = studyService.createStudy(
         userId,
         requestedStudyDto.getTitle(),
         requestedStudyDto.getTopic(),
         requestedStudyDto.getPlace(),
         requestedStudyDto.getTime(),
         requestedStudyDto.getParticipants(),
-        requestedStudyDto.getContent()
+        requestedStudyDto.getContent(),
+        requestedStudyDto.getHashTags()
         );
 
-  List<HashTagDto> hashTagDtos = hashTagService.create(study.getId(),requestedStudyDto.getHashTags());
-    return study.toDto(hashTagDtos);
+    return studyDto;
   }
 }

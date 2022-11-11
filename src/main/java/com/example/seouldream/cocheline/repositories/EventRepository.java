@@ -6,6 +6,8 @@ import org.springframework.data.jpa.repository.*;
 
 import java.util.*;
 
-public interface HashTagRepository extends JpaRepository<HashTag, Long> {
-  List<HashTag> findAllByStudyId(Long studyId);
+public interface EventRepository extends JpaRepository<Event, Long> {
+  Page<Event> findAll(Pageable pageable);
+  Optional<Event> findById(Long id);
+  Event save(Event event);
 }

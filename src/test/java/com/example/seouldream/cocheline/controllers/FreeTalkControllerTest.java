@@ -30,66 +30,49 @@ class FreeTalkControllerTest {
   @MockBean
   FreeTalkService freeTalkService;
 
-  @MockBean
-  FreeTalkHashTagService freeTalkHashTagService;
-
   @Test
   void list() throws Exception {
 
-    FreeTalk freeTalk = new FreeTalk(1L, "writer", "title", "content");
-
     List<FreeTalk> freeTalks = new ArrayList<>();
 
-    freeTalks.add(freeTalk);
+    freeTalks.add(FreeTalk.fake());
 
     given(freeTalkService.list(any()))
-        .willReturn(new PageImpl<>(freeTalks));
-
-    given(freeTalkHashTagService.list(any()))
-        .willReturn(List.of(new FreeTalkHashTagDto("job hunting")));
+        .willReturn(List.of(FreeTalk.fake().toDto()));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/freeTalks"))
         .andExpect(status().isOk())
         .andExpect(content().string(
-            containsString("job hunting")
+            containsString("tester")
         ));
-
   }
 
   @Test
   void details() throws Exception {
     given(freeTalkService.findFreeTalk(any()))
-        .willReturn(new FreeTalk(1L,
-            "jobless Rosie", "new Title", "I am getting a job"));
+        .willReturn(FreeTalk.fake());
 
     mockMvc.perform(MockMvcRequestBuilders.get("/freeTalks/1"))
         .andExpect(status().isOk())
         .andExpect(content().string(
-            containsString("jobless Rosie")
+            containsString("this is test freeTalk")
         ));
   }
 
   @Test
   void post() throws Exception {
-    given(freeTalkService.create(any(), any(), any()))
-        .willReturn(new FreeTalk(
-            1L,
-            "tester",
-            "title!!",
-            "this is content!"));
-
-    given(freeTalkHashTagService.create(any(), any())).willReturn(
-        List.of(new FreeTalkHashTagDto("java"),
-            new FreeTalkHashTagDto("react")
-        ));
+    given(freeTalkService.create(any(), any(), any(),any()))
+        .willReturn(FreeTalk.fake());
 
     mockMvc.perform(MockMvcRequestBuilders.post ("/freeTalks/post")
             .contentType(MediaType.APPLICATION_JSON)
             .content("{" +
-                "\"title\":\"title!!\"," +
-                "\"hashTags\":\"java,react\"," +
-                "\"content\":\"this is content!\"" +
+                "\"title\":\"testTitle\"," +
+                "\"hashTags\":\"job,future\"," +
+                "\"content\":\"this is test freeTalk\"" +
                 "}"))
-        .andExpect(status().isCreated());
+        .andExpect(status().isCreated())
+        .andExpect(content().string(
+            containsString("this is test freeTalk")));
   }
 }

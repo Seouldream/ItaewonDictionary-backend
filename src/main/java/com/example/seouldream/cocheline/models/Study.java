@@ -21,8 +21,10 @@ public class Study {
   private String time;
   private String participants;
   private String content;
-  private Long views;
-  private Long likes;
+  @ElementCollection
+  private List<String> hashTags;
+  private Long views = 0L;
+  private Long likes = 0L;
 
   public Study(Long id,
                String writer,
@@ -32,8 +34,8 @@ public class Study {
                String time,
                String participants,
                String content,
-               Long views,
-               Long likes) {
+               List<String> hashTags
+               ) {
     this.id = id;
     this.writer = writer;
     this.title = title;
@@ -42,8 +44,7 @@ public class Study {
     this.time = time;
     this.participants = participants;
     this.content = content;
-    this.views = views;
-    this.likes = likes;
+    this.hashTags = hashTags;
   }
 
   public Study(
@@ -54,8 +55,7 @@ public class Study {
       String time,
       String participants,
       String content,
-      Long views,
-      Long likes
+      List<String> hashTags
   ) {
     this.writer = writer;
     this.title = title;
@@ -64,8 +64,7 @@ public class Study {
     this.time = time;
     this.participants = participants;
     this.content = content;
-    this.views = views;
-    this.likes = likes;
+    this.hashTags = hashTags;
   }
 
   @CreationTimestamp
@@ -81,43 +80,15 @@ public class Study {
     return id;
   }
 
-  public String getWriter() {
-    return writer;
-  }
-
   public String getTitle() {
     return title;
-  }
-
-  public String getTopic() {
-    return topic;
-  }
-
-  public String getPlace() {
-    return place;
-  }
-
-  public String getTime() {
-    return time;
-  }
-
-  public String getParticipants() {
-    return participants;
   }
 
   public String getContent() {
     return content;
   }
 
-  public Long getViews() {
-    return views;
-  }
-
-  public Long getLikes() {
-    return likes;
-  }
-
-  public StudyDto toDto(List<HashTagDto> hashTags) {
+  public StudyDto toDto() {
     String registrationDate = createdAt == null ? "" : createdAt.toLocalDate().toString();
 
     return new StudyDto(
@@ -133,6 +104,18 @@ public class Study {
         likes,
         registrationDate,
         hashTags
+    );
+  }
+
+  public static Study fake() {
+    return new Study(1L,"Rosie",
+        "test1",
+        "java",
+        "holyWater",
+        "9AM",
+        "2 people",
+        "this is test",
+        List.of("java","react")
     );
   }
 

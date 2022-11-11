@@ -1,5 +1,6 @@
 package com.example.seouldream.cocheline.services;
 
+import com.example.seouldream.cocheline.dtos.*;
 import com.example.seouldream.cocheline.models.*;
 import com.example.seouldream.cocheline.repositories.*;
 import org.springframework.data.domain.*;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.*;
 
 import javax.transaction.*;
 import java.util.*;
+import java.util.stream.*;
 
 @Service
 @Transactional
@@ -18,42 +20,53 @@ public class StudyService {
     this.studyRepository = studyRepository;
   }
 
-  public Page<Study> list(int page) {
+  public List<StudyDto> list(int page) {
 
     Sort sort = Sort.by("createdAt").descending();
 
     pageable = PageRequest.of(page - 1, 4, sort);
 
-    return studyRepository.findAll(pageable);
+    List<StudyDto> studyDtos = studyRepository.findAll(pageable)
+        .stream()
+        .map(Study::toDto)
+        .collect(Collectors.toList());
+
+    return studyDtos;
   }
 
   public int pages() {
     return studyRepository.findAll(pageable).getTotalPages();
   }
 
-  public Study createStudy(
+  public StudyDto findStudy(Long id) {
+
+    Study study = studyRepository.findById(id).orElseThrow();
+
+    return study.toDto();
+  }
+
+  public StudyDto createStudy(
       String userId,
       String title,
       String topic,
       String place,
       String time,
       String participants,
-      String content) {
+      String content,
+      String hashTags
+  ) {
 
-    Long views = 0L;
-    Long likes = 0L;
+    List<String> hashTagList = new ArrayList<>();
 
-    Study study = new Study(userId, title, topic, place, time, participants, content, views, likes);
+    for (String hashTag : hashTags.split(",")) {
+      hashTagList.add(hashTag);
+    }
 
-    Study savedStudy = studyRepository.save(study);
+    Study savedStudy = studyRepository.save(
+        new Study(userId, title, topic, place, time, participants,content, hashTagList)
+    );
 
-    return savedStudy;
-  }
+    return savedStudy.toDto();
 
-  public Study findStudy(Long id) {
-
-    Study study = studyRepository.findById(id).orElseThrow();
-
-    return study;
   }
 }

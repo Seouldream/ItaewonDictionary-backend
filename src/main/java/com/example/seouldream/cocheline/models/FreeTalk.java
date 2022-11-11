@@ -16,6 +16,8 @@ public class FreeTalk {
   private String writer;
   private String title;
   private String content;
+  @ElementCollection
+  private List<String> hashTags;
   private Long views = 0L;
   private Long likes = 0L;
 
@@ -25,25 +27,23 @@ public class FreeTalk {
   public FreeTalk() {
   }
 
-  public FreeTalk(Long id, String writer, String title, String content) {
+  public FreeTalk(Long id, String writer, String title,List<String> hashTags, String content) {
     this.id = id;
     this.writer = writer;
     this.title = title;
+    this.hashTags = hashTags;
     this.content = content;
   }
 
-  public FreeTalk(String writer, String title, String content) {
+  public FreeTalk(String writer, String title,List<String> hashTags, String content) {
     this.writer = writer;
     this.title = title;
+    this.hashTags = hashTags;
     this.content = content;
   }
 
   public Long getId() {
     return id;
-  }
-
-  public String getWriter() {
-    return writer;
   }
 
   public String getTitle() {
@@ -54,17 +54,14 @@ public class FreeTalk {
     return content;
   }
 
-  public Long getViews() {
-    return views;
-  }
-
-  public Long getLikes() {
-    return likes;
-  }
-
-  public FreeTalkDto toDto(List<FreeTalkHashTagDto> freeTalkHashTags) {
+  public FreeTalkDto toDto() {
     String registrationDate = createdAt == null ? "" : createdAt.toLocalDate().toString();
 
-    return new FreeTalkDto(id,writer,title,content,views,likes,registrationDate,freeTalkHashTags);
+    return new FreeTalkDto(id,writer,title,content,views,likes,registrationDate,hashTags);
+  }
+
+  public static FreeTalk fake() {
+    return new FreeTalk(
+        1L,"tester","testTitle",List.of("job","future"),"this is test freeTalk");
   }
 }

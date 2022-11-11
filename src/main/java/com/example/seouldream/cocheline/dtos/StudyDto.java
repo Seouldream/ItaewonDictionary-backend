@@ -17,7 +17,8 @@ public class StudyDto {
   private Long views;
   private Long likes;
   private String registrationDate;
-  private List<HashTagDto> hashTags;
+  private List<String> hashTags;
+
   public StudyDto() {
   }
 
@@ -32,7 +33,7 @@ public class StudyDto {
                   Long views,
                   Long likes,
                   String registrationDate,
-                  List<HashTagDto> hashTags
+                  List<String> hashTags
   ) {
     this.id = id;
     this.writer = writer;
@@ -92,7 +93,11 @@ public class StudyDto {
     return registrationDate;
   }
 
-  public List<HashTagDto> getHashTags() {
+  public List<String> getHashTags() {
     return hashTags;
+  }
+
+  public static StudyDto fake() {
+    return Study.fake().toDto();
   }
 }

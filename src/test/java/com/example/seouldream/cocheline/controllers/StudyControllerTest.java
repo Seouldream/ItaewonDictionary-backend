@@ -7,7 +7,6 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.*;
 import org.springframework.boot.test.mock.mockito.*;
-import org.springframework.data.domain.*;
 import org.springframework.http.*;
 import org.springframework.test.context.*;
 import org.springframework.test.web.servlet.*;
@@ -29,96 +28,56 @@ class StudyControllerTest {
   @MockBean
   private StudyService studyService;
 
-  @MockBean
-  private HashTagService hashTagService;
-
   @Test
   void studies() throws Exception {
 
-    Study study = new Study(1L,
-        "rosie",
-        "test",
-        "test",
-        "holywater",
-        "9AM",
-        "2person",
-        "test",
-        1L,
-        1L);
-
-    List<Study> studies = List.of(study);
-
-    given(hashTagService.list(any())).willReturn(
-        List.of(
-            new HashTagDto("java"),
-            new HashTagDto("tag")
-        ));
-
-    given(studyService.list(1)).willReturn(
-        new PageImpl<>(List.of(
-            new Study(1L,"rosie","test","test","holywater","9AM","2person","test",1L,1L)
-        ))
-    );
+    given(studyService.list(1)).willReturn(List.of(Study.fake().toDto()));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/studies"))
         .andExpect(status().isOk())
         .andExpect(content().string(
-            containsString("rosie")
+            containsString("Rosie")
         ))
         .andExpect(content().string(
-            containsString("holywater")
+            containsString("holyWater")
         ))
         .andExpect(content().string(
-            containsString("tag")
+            containsString("hashTags")
         ));
   }
 
   @Test
   void details() throws Exception {
     given(studyService.findStudy(any()))
-        .willReturn(new Study(1L,"rosie",
-            "test1",
-            "java",
-            "holywater",
-            "9AM",
-            "2 people",
-            "this is test",
-            1L,
-            1L
-        ));
+        .willReturn(StudyDto.fake());
 
     mockMvc.perform(MockMvcRequestBuilders.get("/studies/1"))
         .andExpect(status().isOk())
         .andExpect(content().string(
-            containsString("holywater")
+            containsString("holyWater")
         ));
   }
 
   @Test
   void post() throws Exception {
-    given(studyService.createStudy(any(),any(),any(),any(),any(),any(),any()))
-        .willReturn(new Study(1L,"rosie",
-            "test1",
-            "java",
-            "holywater",
-            "9AM",
-            "2 people",
-            "this is test",
-            1L,
-            1L
-            ));
+
+    given(studyService.createStudy(any(),any(),any(),any(),any(),any(),any(),any()))
+        .willReturn(StudyDto.fake());
 
     mockMvc.perform(MockMvcRequestBuilders.post("/studies/post")
             .contentType(MediaType.APPLICATION_JSON)
             .content("{" +
                 "\"title\":\"test1\"," +
                 "\"topic\":\"java\"," +
-                "\"place\":\"holywater\"," +
+                "\"place\":\"holyWater\"," +
                 "\"time\":\"9AM\"," +
                 "\"participants\":\"2 people\"," +
                 "\"hashTags\":\"java,react\"," +
                 "\"content\":\"this is test\"" +
                 "}"))
-        .andExpect(status().isCreated());
+        .andExpect(status().isCreated())
+        .andExpect(content().string(
+            containsString("test1")
+        ));
   }
 }

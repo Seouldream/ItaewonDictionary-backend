@@ -12,5 +12,4 @@ public interface StudyRepository extends JpaRepository<Study, Long> {
   Page<Study> findAll(Pageable pageable);
   Study save(Study study);
 
-
 }

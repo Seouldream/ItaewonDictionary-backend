@@ -10,7 +10,7 @@ public class FreeTalkDto {
   Long views;
   Long likes;
   String registrationDate;
-  List<FreeTalkHashTagDto> freeTalkHashTags;
+  List<String> hashTags;
 
   public FreeTalkDto() {
   }
@@ -22,7 +22,7 @@ public class FreeTalkDto {
                      Long views,
                      Long likes,
                      String registrationDate,
-                     List<FreeTalkHashTagDto> freeTalkHashTags) {
+                     List<String> hashTags) {
     this.id = id;
     this.writer = writer;
     this.title = title;
@@ -30,7 +30,7 @@ public class FreeTalkDto {
     this.views = views;
     this.likes = likes;
     this.registrationDate = registrationDate;
-    this.freeTalkHashTags = freeTalkHashTags;
+    this.hashTags = hashTags;
   }
 
   public Long getId() {
@@ -61,7 +61,7 @@ public class FreeTalkDto {
     return registrationDate;
   }
 
-  public List<FreeTalkHashTagDto> getFreeTalkHashTags() {
-    return freeTalkHashTags;
+  public List<String> getHashTags() {
+    return hashTags;
   }
 }

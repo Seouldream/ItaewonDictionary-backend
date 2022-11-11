@@ -17,7 +17,6 @@ import static org.mockito.Mockito.verify;
 class StudyServiceTest {
   private StudyService studyService;
   private StudyRepository studyRepository;
-  private HashTagRepository hashTagRepository;
 
   @SpyBean
   Pageable pageable;
@@ -25,7 +24,6 @@ class StudyServiceTest {
   @BeforeEach
   void setUp() {
     studyRepository = mock(StudyRepository.class);
-    hashTagRepository = mock(HashTagRepository.class);
     studyService = new StudyService(studyRepository);
   }
 
@@ -41,76 +39,36 @@ class StudyServiceTest {
 
     given(studyRepository.findAll(any(Pageable.class))).willReturn(page);
 
-    assertThat(studyService.list(1)).isNotNull();
-
     assertThat(studyService.list(1)).hasSize(1);
+
+    assertThat(studyRepository.findAll(any(Pageable.class)));
   }
 
   @Test
   void findStudyById() {
-    String writer = "tester";
-    String title = "one Front man needed";
-    String topic = "frontend Engineer";
-    String place = "HolyWater";
-    String time = "9AM";
-    String participants = "2 people";
-    String content = "I need a man ,bro";
-    Long views = 100L;
-    Long likes = 999L;
-
-    Study study = new Study(1L,writer,
-        title,
-        topic,
-        place,
-        time,
-        participants,
-        content,
-        views,
-        likes);
 
     given(studyRepository.findById(any()))
-        .willReturn(Optional.of(study));
+        .willReturn(Optional.of(Study.fake()));
 
-    studyService.findStudy(study.getId());
+    studyService.findStudy(Study.fake().getId());
 
-    verify(studyRepository).findById(study.getId());
+    verify(studyRepository).findById(Study.fake().getId());
 
   }
 
   @Test
   void post() {
-    String writer = "tester";
-    String title = "one Front man needed";
-    String topic = "frontend Engineer";
-    String place = "HolyWater";
-    String time = "9AM";
-    String participants = "2 people";
-    String content = "I need a man ,bro";
-    Long views = 100L;
-    Long likes = 999L;
-    Study study = new Study(writer,
-        title,
-        topic,
-        place,
-        time,
-        participants,
-        content,
-        views,
-        likes);
+    given(studyRepository.save(any())).willReturn(Study.fake());
 
-    studyService.createStudy(
-        writer,
-        title,
-        topic,
-        place,
-        time,
-        participants,
-        content
-    );
-
-    given(studyRepository.save(study)).willReturn(
-        study
-    );
+    studyService
+        .createStudy("any()",
+            "title",
+            "topic",
+            "place",
+            "time)",
+            "participants",
+            "content",
+            "java,react");
 
     verify(studyRepository).save(any());
   }
