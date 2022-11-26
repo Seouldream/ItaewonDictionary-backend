@@ -14,7 +14,7 @@ public class CochelineApplication {
   }
 
   @Bean
-  public WebSecurityCustomizer webSecurityCustomizer() {
+  public WebSecurityCustomizer ignoringCustomizer() {
     return (web) -> web.ignoring().antMatchers("/**");
   }
 
@@ -23,7 +23,8 @@ public class CochelineApplication {
     return new WebMvcConfigurer() {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("*");
+        registry.addMapping("/**").allowedOrigins("*")
+            .allowedMethods("GET","POST","PATCH","DELETE","PUT");
       }
     };
   }
