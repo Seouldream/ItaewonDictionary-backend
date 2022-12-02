@@ -5,6 +5,8 @@ import com.example.seouldream.cocheline.services.*;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.*;
+
 @RestController
 @RequestMapping("/admin")
 public class GrammarAdminController {
@@ -28,7 +30,6 @@ public class GrammarAdminController {
   ) {
     return createGrammarService.grammar(grammarDto);
   }
-
   @PatchMapping("/grammar-introduction")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void introduction(
