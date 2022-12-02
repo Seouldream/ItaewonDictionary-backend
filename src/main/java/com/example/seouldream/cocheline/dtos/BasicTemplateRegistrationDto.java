@@ -1,27 +1,21 @@
 package com.example.seouldream.cocheline.dtos;
 
-public class BasicTemplateDto {
-  private Long id;
+public class BasicTemplateRegistrationDto {
   private String title;
   private String englishSentence;
   private String koreanSentence;
   private String youtubeUrl;
   private String description;
 
-  public BasicTemplateDto() {
+  public BasicTemplateRegistrationDto() {
   }
 
-  public BasicTemplateDto(Long id, String title, String englishSentence, String koreanSentence, String youtubeUrl, String description) {
-    this.id = id;
+  public BasicTemplateRegistrationDto(String title, String englishSentence, String koreanSentence, String youtubeUrl, String description) {
     this.title = title;
     this.englishSentence = englishSentence;
     this.koreanSentence = koreanSentence;
     this.youtubeUrl = youtubeUrl;
     this.description = description;
-  }
-
-  public Long getId() {
-    return id;
   }
 
   public String getTitle() {
@@ -42,5 +36,14 @@ public class BasicTemplateDto {
 
   public String getDescription() {
     return description;
+  }
+
+  public static BasicTemplateRegistrationDto fake() {
+    return new BasicTemplateRegistrationDto(
+        "인삿말하기",
+        "Hi",
+        "안녕",
+        "www.hi-youtube.com",
+        "this could be Hello");
   }
 }

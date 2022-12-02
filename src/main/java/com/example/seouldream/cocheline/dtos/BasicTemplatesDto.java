@@ -5,6 +5,9 @@ import java.util.*;
 public class BasicTemplatesDto {
   private List<BasicTemplateDto> basicTemplates;
 
+  public BasicTemplatesDto() {
+  }
+
   public BasicTemplatesDto(List<BasicTemplateDto> basicTemplates) {
     this.basicTemplates = basicTemplates;
   }

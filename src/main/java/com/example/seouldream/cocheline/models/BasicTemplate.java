@@ -56,6 +56,10 @@ public class BasicTemplate {
     return id;
   }
 
+  public String getTitle() {
+    return title;
+  }
+
   public String getEnglishSentence() {
     return englishSentence;
   }
@@ -74,5 +78,13 @@ public class BasicTemplate {
 
   public BasicTemplateDto toDto() {
     return new BasicTemplateDto(id,title,englishSentence,koreanSentence,youtubeUrl,description);
+  }
+
+  public void update(BasicTemplateUpdateDto basicTemplateUpdateDto) {
+    this.title = basicTemplateUpdateDto.getTitle();
+    this.englishSentence = basicTemplateUpdateDto.getEnglishSentence();
+    this.koreanSentence = basicTemplateUpdateDto.getKoreanSentence();
+    this.youtubeUrl = basicTemplateUpdateDto.getYoutubeUrl();
+    this.description = basicTemplateUpdateDto.getDescription();
   }
 }

@@ -5,11 +5,12 @@ import com.example.seouldream.cocheline.models.*;
 import com.example.seouldream.cocheline.repositories.*;
 import org.springframework.security.core.*;
 import org.springframework.stereotype.*;
+import org.springframework.transaction.annotation.*;
 
 import java.util.*;
 
 @Service
-@Transient
+@Transactional
 public class GetBasicTemplatesService {
   private BasicTemplateRepository basicTemplateRepository;
 

@@ -1,18 +1,16 @@
 package com.example.seouldream.cocheline.dtos;
 
-public class BasicTemplateDto {
-  private Long id;
+public class BasicTemplateUpdateDto {
   private String title;
   private String englishSentence;
   private String koreanSentence;
   private String youtubeUrl;
   private String description;
 
-  public BasicTemplateDto() {
+  public BasicTemplateUpdateDto() {
   }
 
-  public BasicTemplateDto(Long id, String title, String englishSentence, String koreanSentence, String youtubeUrl, String description) {
-    this.id = id;
+  public BasicTemplateUpdateDto(String title, String englishSentence, String koreanSentence, String youtubeUrl,String description) {
     this.title = title;
     this.englishSentence = englishSentence;
     this.koreanSentence = koreanSentence;
@@ -20,8 +18,12 @@ public class BasicTemplateDto {
     this.description = description;
   }
 
-  public Long getId() {
-    return id;
+  public static BasicTemplateUpdateDto fake() {
+    return new BasicTemplateUpdateDto(
+        "수정된 제목",
+        "This has been updated",
+        "업데이트 되었습니다.",
+        "www.youtube.com","수정됨");
   }
 
   public String getTitle() {

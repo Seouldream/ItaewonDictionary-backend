@@ -39,7 +39,7 @@ class GrammarUserControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.get("/grammar"))
         .andExpect(status().isOk())
         .andExpect(content().string(
-            containsString("grammar introduction!!!")
+            containsString("grammar introduction")
         ));
   }
 
@@ -53,7 +53,7 @@ class GrammarUserControllerTest {
     mockMvc.perform(MockMvcRequestBuilders.get("/grammar"))
         .andExpect(status().isBadRequest())
         .andExpect(content().string(
-            containsString("grammar introduction")
+            containsString("그래마가 아직 존재하지 않아요!")
         ));;
   }
 }
