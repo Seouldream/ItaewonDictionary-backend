@@ -1,7 +1,6 @@
 package com.example.seouldream.cocheline.controllers;
 
 import com.example.seouldream.cocheline.config.*;
-import com.example.seouldream.cocheline.dtos.*;
 import com.example.seouldream.cocheline.models.*;
 import com.example.seouldream.cocheline.services.*;
 import org.junit.jupiter.api.*;
@@ -12,14 +11,10 @@ import org.springframework.http.*;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.*;
 
-import static org.hamcrest.Matchers.containsString;
-import static org.junit.jupiter.api.Assertions.*;
-import static org.junit.jupiter.params.shadow.com.univocity.parsers.conversions.Conversions.string;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.BDDMockito.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @EnableMockMvc
 @WebMvcTest(BasicTemplateAdminController.class)

@@ -36,7 +36,7 @@ public class BasicTemplateAdminController {
       @PathVariable("id") Long id,
       @RequestBody BasicTemplateUpdateDto basicTemplateUpdateDto
   ) {
-    System.out.println("id~~" + id);
+
     updateBasicTemplateService.basicTemplate(id,basicTemplateUpdateDto);
   }
 
