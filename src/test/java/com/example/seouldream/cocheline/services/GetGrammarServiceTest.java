@@ -15,9 +15,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 class GetGrammarServiceTest {
-  GrammarRepository grammarRepository;
-
-  GetGrammarService getGrammarService;
+  private GrammarRepository grammarRepository;
+  private GetGrammarService getGrammarService;
 
   @BeforeEach
   void setUp() {
