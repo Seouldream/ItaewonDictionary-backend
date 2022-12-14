@@ -51,9 +51,9 @@ class PracticalTemplateUserControllerTest {
   @Test
   void practicalTemplatesByCategory() throws Exception {
 
-    given(getPracticalTemplatesByCategoryIdService.practicalTemplates(any()))
-        .willReturn(List.of(PracticalTemplate.example1ByCategoryCafe().toDto(),
-            PracticalTemplate.example2ByCategoryCafe().toDto()));
+//    given(getPracticalTemplatesByCategoryIdService.practicalTemplates(any(), any(), any()))
+//        .willReturn(List.of(PracticalTemplate.example1ByCategoryCafe().toDto(),
+//            PracticalTemplate.example2ByCategoryCafe().toDto()));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/practicalTemplates/categories/1"))
         .andExpect(status().isOk())

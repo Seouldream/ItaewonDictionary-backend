@@ -21,7 +21,7 @@ class CreatePracticalTemplateServiceTest {
 
     createPracticalTemplateService = new CreatePracticalTemplateService(
         practicalTemplateRepository,
-        categoryRepository);
+        categoryRepository, s3Uploader);
   }
 
   @Test

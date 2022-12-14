@@ -18,6 +18,7 @@ public class CochelineApplication {
     return (web) -> web.ignoring().antMatchers("/**");
   }
 
+
   @Bean
   public WebMvcConfigurer webMvcConfigurer() {
     return new WebMvcConfigurer() {

@@ -1,8 +1,11 @@
 package com.example.seouldream.cocheline.models;
 
 import com.example.seouldream.cocheline.dtos.*;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import java.time.*;
 
 @Entity
 public class PracticalTemplate {
@@ -10,11 +13,19 @@ public class PracticalTemplate {
   @GeneratedValue
   private Long id;
   private Long categoryId;
+  @Column(name="title", length = 2048)
   private String title;
+  @Column(name="description", length = 2048)
   private String description;
+  @Column(name="koreanSentence", length = 2048)
   private String koreanSentence;
+  @Column(name="bestPractice", length = 2048)
   private String bestPractice;
+  @Column(name="recordUrl", length = 2048)
   private String recordUrl;
+
+  @CreationTimestamp
+  private LocalDateTime createdAt;
 
   public Long getId() {
     return id;

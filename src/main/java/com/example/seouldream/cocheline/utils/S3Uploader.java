@@ -1,17 +1,13 @@
 package com.example.seouldream.cocheline.utils;
 
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.CannedAccessControlList;
-import com.amazonaws.services.s3.model.PutObjectRequest;
-import org.springframework.beans.factory.annotation.Value;
+import com.amazonaws.services.s3.*;
+import com.amazonaws.services.s3.model.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.*;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Optional;
-import java.util.UUID;
+import java.io.*;
+import java.util.*;
 
 @Component
 public class S3Uploader {
@@ -32,10 +28,11 @@ public class S3Uploader {
   }
 
   public String upload(File uploadFile, String filePath) {
+
     String fileName = filePath + "/" + UUID.randomUUID() + uploadFile.getName();
-    String uploadImageUrl = putS3(uploadFile, fileName);
+    String uploadRecordUrl = putS3(uploadFile, fileName);
     removeNewFile(uploadFile);
-    return uploadImageUrl;
+    return uploadRecordUrl;
   }
 
   private String putS3(File uploadFile, String fileName) {
@@ -54,7 +51,15 @@ public class S3Uploader {
   }
 
   private Optional<File> convert(MultipartFile file) throws IOException {
-    File convertFile = new File(System.getProperty("user.dir") + "/" + file.getOriginalFilename());
+    File convertFile = new File(Objects.requireNonNull(file.getOriginalFilename()));
+    // 확장자가 .m4a로 끝나면 mp3파일로 변환
+    if (file.getOriginalFilename().substring(file.getOriginalFilename().length() - 4).equals(
+        ".m4a")
+    ) {
+      convertFile = new File(file.getOriginalFilename().substring(0, file.getOriginalFilename().length() - 4)
+          + ".mp3");
+    }
+
     if (convertFile.createNewFile()) {
       try (FileOutputStream fileOutputStream = new FileOutputStream(convertFile)) {
         fileOutputStream.write(file.getBytes());

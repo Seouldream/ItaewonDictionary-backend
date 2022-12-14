@@ -33,6 +33,9 @@ class PracticalTemplateAdminControllerTest {
   @MockBean
   private DeletePracticalTemplateService deletePracticalTemplateService;
 
+  @MockBean
+  private DeleteCategoriesService deleteCategoriesService;
+
   @Test
   void createWithNewCategory() throws Exception {
 
@@ -75,5 +78,17 @@ class PracticalTemplateAdminControllerTest {
         .andExpect(status().isNoContent());
 
     verify(deletePracticalTemplateService).practicalTemplate(1L);
+  }
+
+  @Test
+  void deleteCategoriesByIds() throws Exception {
+    mockMvc.perform(MockMvcRequestBuilders.delete("/admin/practicalTemplate/categories")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content("{" +
+                    "\"data\":[1,2]" +
+                "}"))
+        .andExpect(status().isNoContent());
+
+    verify(deleteCategoriesService).categories(any());
   }
 }
