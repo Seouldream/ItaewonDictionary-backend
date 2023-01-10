@@ -23,11 +23,12 @@ public class PracticalTemplateUserController {
 
   @GetMapping("/categories")
   @ResponseStatus(HttpStatus.OK)
-  public PracticalTemplateCategoriesDto categories() {
-    List<PracticalTemplateCategoryDto> practicalTemplateCategoryDtos =
-        getPracticalTemplateCategoriesService.categories();
+  public PracticalTemplateCategoriesDto categories(
+      @RequestParam(required = false, defaultValue = "1") Integer page
+  ) {
 
-    return new PracticalTemplateCategoriesDto(practicalTemplateCategoryDtos);
+    return getPracticalTemplateCategoriesService.categories(page);
+
   }
 
   @GetMapping("/categories/{id}")

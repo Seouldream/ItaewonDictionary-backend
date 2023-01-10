@@ -1,6 +1,7 @@
 package com.example.seouldream.cocheline.controllers;
 
 import com.example.seouldream.cocheline.config.*;
+import com.example.seouldream.cocheline.dtos.*;
 import com.example.seouldream.cocheline.models.*;
 import com.example.seouldream.cocheline.services.*;
 import com.example.seouldream.cocheline.utils.*;
@@ -8,6 +9,7 @@ import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.*;
 import org.springframework.boot.test.mock.mockito.*;
+import org.springframework.data.domain.*;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.*;
 
@@ -38,10 +40,12 @@ class PracticalTemplateUserControllerTest {
   }
 
   @Test
-  void PracticalTemplateCategory() throws Exception {
+  void PracticalTemplateCategories() throws Exception {
 
-    given(getPracticalTemplateCategoriesService.categories()).willReturn(
-        List.of(Category.cafe().toDto(), Category.bar().toDto()));
+    given(getPracticalTemplateCategoriesService.categories(1)).willReturn(
+        new PracticalTemplateCategoriesDto(
+          List.of(Category.cafe().toDto(),Category.bar().toDto()),new PagesDto(1)
+        ));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/practicalTemplates/categories"))
         .andExpect(status().isOk())
@@ -51,9 +55,9 @@ class PracticalTemplateUserControllerTest {
   @Test
   void practicalTemplatesByCategory() throws Exception {
 
-//    given(getPracticalTemplatesByCategoryIdService.practicalTemplates(any(), any(), any()))
-//        .willReturn(List.of(PracticalTemplate.example1ByCategoryCafe().toDto(),
-//            PracticalTemplate.example2ByCategoryCafe().toDto()));
+    given(getPracticalTemplatesByCategoryIdService.practicalTemplates(any()))
+        .willReturn(new PracticalTemplatesDto(List.of(PracticalTemplate.example1ByCategoryCafe().toDto(),
+            PracticalTemplate.example2ByCategoryCafe().toDto())));
 
     mockMvc.perform(MockMvcRequestBuilders.get("/practicalTemplates/categories/1"))
         .andExpect(status().isOk())

@@ -6,11 +6,11 @@ public class PagesDto {
   public PagesDto() {
   }
 
-  public Integer getTotalPages() {
-    return totalPages;
-  }
-
   public PagesDto(Integer totalPages) {
     this.totalPages = totalPages;
+  }
+
+  public Integer getTotalPages() {
+    return totalPages;
   }
 }

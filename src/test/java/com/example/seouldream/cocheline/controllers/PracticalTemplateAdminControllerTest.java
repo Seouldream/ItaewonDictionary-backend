@@ -4,11 +4,13 @@ import com.example.seouldream.cocheline.config.*;
 import com.example.seouldream.cocheline.dtos.*;
 import com.example.seouldream.cocheline.models.*;
 import com.example.seouldream.cocheline.services.*;
+import com.example.seouldream.cocheline.utils.*;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.boot.test.autoconfigure.web.servlet.*;
 import org.springframework.boot.test.mock.mockito.*;
 import org.springframework.http.*;
+import org.springframework.mock.web.*;
 import org.springframework.test.web.servlet.*;
 import org.springframework.test.web.servlet.request.*;
 
@@ -36,21 +38,26 @@ class PracticalTemplateAdminControllerTest {
   @MockBean
   private DeleteCategoriesService deleteCategoriesService;
 
+
   @Test
   void createWithNewCategory() throws Exception {
 
-    given(createPracticalTemplateService.practicalTemplate(any()))
+    given(createPracticalTemplateService.practicalTemplate(any(),any()))
         .willReturn(PracticalTemplate.example1ByCategoryCafe().toDto());
 
-    mockMvc.perform(MockMvcRequestBuilders.post("/admin/practicalTemplate")
-            .contentType(MediaType.APPLICATION_JSON)
-            .content("{" +
-                "\"category\":\"bar\"," +
-                "\"title\":\"바에서 음료 물어보기\"," +
-                "\"description\":\"바에서 말 걸때\"," +
-                "\"koreanSentence\":\"어떤 음료 좋아하세요?\"," +
-                "\"bestPractice\":\"what kind of drink do you like?\"" +
-                "}"))
+    MockMultipartFile multipartFile = new MockMultipartFile("multipartFile", "filename.txt", "text/plain", "some xml".getBytes());
+    MockMultipartFile jsonFile = new MockMultipartFile("practicalTemplate", "", "application/json",
+        ("{" +
+            "\"category\":\"bar\"," +
+            "\"title\":\"바에서 음료 물어보기\"," +
+            "\"description\":\"바에서 말 걸때\"," +
+            "\"koreanSentence\":\"어떤 음료 좋아하세요?\"," +
+            "\"bestPractice\":\"what kind of drink do you like?\"" +
+            "}").getBytes());
+
+    mockMvc.perform(MockMvcRequestBuilders.multipart("/admin/practicalTemplate")
+                .file(multipartFile)
+                .file(jsonFile))
         .andExpect(status().isCreated())
         .andExpect(content().string(containsString("마! 커피 한 잔 주문되나!?")));
   }

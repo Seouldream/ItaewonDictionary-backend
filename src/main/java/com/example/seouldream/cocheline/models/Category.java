@@ -1,19 +1,24 @@
 package com.example.seouldream.cocheline.models;
 
 import com.example.seouldream.cocheline.dtos.*;
+import org.hibernate.annotations.*;
 
 import javax.persistence.*;
+import javax.persistence.Entity;
+import java.time.*;
 
 @Entity
 public class Category {
   @Id
   @GeneratedValue
   private Long id;
+  private String name;
+
+  @CreationTimestamp
+  private LocalDateTime createdAt;
 
   public Category() {
   }
-
-  private String name;
 
   public Category(Long id, String name) {
     this.id = id;

@@ -15,17 +15,15 @@ public class PracticalTemplateAdminController {
   private UpdatePracticalTemplateService updatePracticalTemplateService;
   private DeletePracticalTemplateService deletePracticalTemplateService;
   private DeleteCategoriesService deleteCategoriesService;
-  private final S3Uploader s3Uploader;
 
   public PracticalTemplateAdminController(CreatePracticalTemplateService createPracticalTemplateService,
                                           UpdatePracticalTemplateService updatePracticalTemplateService,
                                           DeletePracticalTemplateService deletePracticalTemplateService,
-                                          DeleteCategoriesService deleteCategoriesService, S3Uploader s3Uploader) {
+                                          DeleteCategoriesService deleteCategoriesService) {
     this.createPracticalTemplateService = createPracticalTemplateService;
     this.updatePracticalTemplateService = updatePracticalTemplateService;
     this.deletePracticalTemplateService = deletePracticalTemplateService;
     this.deleteCategoriesService = deleteCategoriesService;
-    this.s3Uploader = s3Uploader;
   }
 
   @PostMapping(value = "/practicalTemplate",consumes = {MediaType.APPLICATION_JSON_VALUE, MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -35,7 +33,6 @@ public class PracticalTemplateAdminController {
       @RequestPart(value="multipartFile", required = false) MultipartFile multipartFile
     ) throws IOException {
 
-    System.out.println(practicalTemplateRegistrationDto.getCategory());
         return createPracticalTemplateService.practicalTemplate(practicalTemplateRegistrationDto,multipartFile);
     }
 
