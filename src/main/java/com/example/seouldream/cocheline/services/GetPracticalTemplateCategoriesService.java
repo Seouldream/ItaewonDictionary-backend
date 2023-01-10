@@ -3,6 +3,7 @@ package com.example.seouldream.cocheline.services;
 import com.example.seouldream.cocheline.dtos.*;
 import com.example.seouldream.cocheline.models.*;
 import com.example.seouldream.cocheline.repositories.*;
+import org.springframework.data.domain.*;
 import org.springframework.stereotype.*;
 import org.springframework.transaction.annotation.*;
 
@@ -17,15 +18,17 @@ public class GetPracticalTemplateCategoriesService {
     this.categoryRepository = categoryRepository;
   }
 
-  public List<PracticalTemplateCategoryDto> categories() {
+  public PracticalTemplateCategoriesDto categories(Integer page) {
+    Sort sort = Sort.by("CreatedAt").descending();
 
-    List<Category> categories = categoryRepository.findAll();
+    Pageable pageable = PageRequest.of(page - 1, 8,sort);
 
-    List<PracticalTemplateCategoryDto> categoryDtos = new ArrayList<>();
+    Page<Category> categories = categoryRepository.findAll(pageable);
 
-    for(Category category : categories) {
-      categoryDtos.add(category.toDto());
-    }
-    return categoryDtos;
+    List<PracticalTemplateCategoryDto> categoryDtos = categories.stream().map(Category::toDto).toList();
+
+    PagesDto pagesDto = new PagesDto(categories.getTotalPages());
+
+    return new PracticalTemplateCategoriesDto(categoryDtos,pagesDto);
   }
 }

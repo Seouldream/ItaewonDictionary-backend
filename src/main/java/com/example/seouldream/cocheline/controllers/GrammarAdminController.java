@@ -30,6 +30,7 @@ public class GrammarAdminController {
   ) {
     return createGrammarService.grammar(grammarDto);
   }
+
   @PatchMapping("/grammar-introduction")
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void introduction(

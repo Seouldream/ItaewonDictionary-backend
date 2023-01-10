@@ -8,10 +8,15 @@ public class BasicTemplate {
   @Id
   @GeneratedValue
   private Long id;
+  @Column(name="title", length = 2048)
   private String title;
+  @Column(name="englishSentence", length = 2048)
   private String englishSentence;
+  @Column(name="koreanSentence", length = 2048)
   private String koreanSentence;
+  @Column(name="youtubeUrl", length = 2048)
   private String youtubeUrl;
+  @Column(name="description", length = 2048)
   private String description;
 
   public BasicTemplate() {

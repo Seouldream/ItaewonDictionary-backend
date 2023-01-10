@@ -10,7 +10,9 @@ public class Grammar {
   @Id
   @GeneratedValue
   private Long id;
+  @Column(name="introduction", length = 2048)
   private String introduction;
+  @Column(name="content", length = 2048)
   private String content;
 
   public Grammar() {

@@ -1,5 +1,7 @@
 package com.example.seouldream.cocheline.dtos;
 
+import org.springframework.web.multipart.*;
+
 public class PracticalTemplateRegistrationDto {
   private String category;
   private String title;
@@ -14,7 +16,8 @@ public class PracticalTemplateRegistrationDto {
                                           String title,
                                           String description,
                                           String koreanSentence,
-                                          String bestPractice) {
+                                          String bestPractice
+  ) {
     this.category = category;
     this.title = title;
     this.description = description;
@@ -48,7 +51,8 @@ public class PracticalTemplateRegistrationDto {
         "커피주문하기",
         "커피 주문할 때 무러보기",
         "마! 커피 한 잔 주문되나!?",
-        "can I get a coffee?");
+        "can I get a coffee?"
+    );
   }
 
   public static PracticalTemplateRegistrationDto exampleWithCategoryBar() {
