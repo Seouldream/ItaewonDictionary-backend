@@ -9,6 +9,7 @@ import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.configuration.*;
 import org.springframework.security.crypto.argon2.*;
 import org.springframework.security.crypto.password.*;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.config.annotation.*;
 
 @SpringBootApplication
@@ -54,5 +55,10 @@ public class CochelineApplication {
   @Bean
   public PasswordEncoder passwordEncoder() {
     return new Argon2PasswordEncoder();
+  }
+
+  @Bean
+  public RestTemplate restTemplate() {
+    return new RestTemplate();
   }
 }

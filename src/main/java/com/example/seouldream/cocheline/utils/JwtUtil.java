@@ -19,6 +19,7 @@ public class JwtUtil {
   }
 
   public Long decode(String token) {
+    System.out.println("token: " + token);
     JWTVerifier verifier = JWT.require(algorithm).build();
     DecodedJWT verify = verifier.verify(token);
 
