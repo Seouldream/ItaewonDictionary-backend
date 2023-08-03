@@ -5,7 +5,7 @@ plugins {
 }
 
 group = 'com.example.seouldream'
-version = '0.0.1-SNAPSHOT'
+version = '1.0'
 sourceCompatibility = '17'
 
 repositories {
@@ -26,7 +26,6 @@ dependencies {
 
 	implementation 'org.projectlombok:lombok:1.18.22'
 
-
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
 	runtimeOnly 'com.h2database:h2'
@@ -34,6 +33,10 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
+}
+
+jar {
+	enabled = false
 }
 
 tasks.named('test') {

@@ -12,6 +12,10 @@ public class LoginResultDto {
     this.role=role;
   }
 
+  public LoginResultDto(String accessToken) {
+    this.accessToken = accessToken;
+  }
+
   public String getAccessToken() {
     return accessToken;
   }
