@@ -47,9 +47,9 @@
   - 카테고리 관리
 
 ## 🛠️ 기술 스택
-- Javascript
-- React
-- Jest
-- MSW
+- Java
+- Spring Boot
+- Gradle
+- JUnit5
 
 🌴 [Frontend Repo 바로가기](https://github.com/Seouldream/ItaewonDictionary-frontend)
